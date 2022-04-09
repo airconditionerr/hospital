@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.dao.UserDao">
+    <select id="loginByUsername" resultType="com.ac.bean.User">
+        select *
+        from user
+        where user_name = #{username}
+          and user_password = #{password}
+    </select>
+    <select id="isExist" resultType="com.ac.bean.User">
+        select *
+        from user
+        where user_name = #{username}
+    </select>
+    <!--用户注册-->
+    <insert id="registerByUsername">
+        insert into user
+        (user_id, name, id_card, user_name, user_sex, user_password, user_email, user_mobile, user_register_time,
+         user_register_ip)
+        values (#{userId}, #{name}, #{idCard}, #{username}, #{sex}, #{password}, #{email}, #{mobile}, #{registerTime},
+                #{registerip})
+    </insert>
+    <select id="getUserInfoByUserId" resultType="com.ac.bean.User">
+        select *
+        from user
+        where user_id = #{userId}
+    </select>
+    <select id="getUserInfoPage" resultType="com.ac.bean.User">
+        select *
+        from user limit #{offset}, #{pageSize}
+    </select>
+    <delete id="deleteUser">
+        delete
+        from user
+        where user_id = #{userId}
+    </delete>
+    <update id="updateUserInfo">
+        update user set user_email = #{userEmail}, user_mobile = #{userMobile} where user_id = #{userId}
+    </update>
+</mapper>

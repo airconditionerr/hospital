@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.dao.OrderRecordDao">
+    <insert id="appoint">
+        insert into order_record (order_id, user_id, department_name, doctor_name, transact_date, transact_time,
+                                  create_time, disease_info, is_success)
+        values (#{orderId}, #{userId}, #{departmentName}, #{doctorName}, #{transactDate}, #{transactTime},
+                #{createTime}, #{diseaseInfo}, #{isSuccess})
+    </insert>
+
+    <select id="getOrderInfoPage" resultType="com.ac.bean.OrderRecord">
+        select *
+        from order_record
+        where user_id = #{userId} limit #{offset}
+            , #{pageSize}
+    </select>
+
+    <select id="getOrderInfoPageByDoctorId" resultType="com.ac.bean.OrderRecord">
+        select *
+        from order_record
+        where doctor_name = #{doctorName} limit #{offset}
+            , #{pageSize}
+    </select>
+
+    <select id="getOrderNumByDoctorName" resultType="Integer">
+        select count(*)
+        from order_record
+        where doctor_name = #{doctorName}
+    </select>
+
+    <select id="getOrderInfoPage2" resultType="com.ac.bean.OrderRecord">
+        select *
+        from order_record limit #{offset}, #{pageSize}
+    </select>
+
+    <delete id="cancelAppoint">
+        delete
+        from order_record
+        where order_id = #{orderId}
+    </delete>
+
+    <update id="notifyUser">
+        update order_record
+        set is_send     = #{idSend},
+            notify_time = #{notifyTime}
+        where order_id = #{orderId}
+    </update>
+
+    <update id="finish">
+        update order_record
+        set is_finish = 1
+        where order_id = #{orderId}
+    </update>
+
+    <select id="getOrderRecordInfo" resultType="com.ac.bean.OrderRecord">
+        select *
+        from order_record
+        where order_id = #{orderId}
+    </select>
+</mapper>

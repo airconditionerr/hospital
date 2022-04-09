@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ac.dao.NoticeDao">
+    <select id="getNoticeInfoPage" resultType="com.ac.bean.Notice">
+        select * from notice limit #{offset}, #{pageSize}
+    </select>
+
+    <select id="getThisNoticeInfo" resultType="com.ac.bean.Notice">
+        select * from notice where notice_id = #{id}
+    </select>
+</mapper>

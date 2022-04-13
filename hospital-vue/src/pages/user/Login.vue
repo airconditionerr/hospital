@@ -1,30 +1,36 @@
 <template>
-  <div class="whole-container">
-    <el-row>
-      <el-col span="4" offset="10"><h1>用户登录</h1></el-col>
-    </el-row>
-    <el-row>
-      <el-col span="4" offset="10">
-        <el-form status-icon="true" :model="loginForm" :rules="rules" ref="loginForm">
-          <el-form-item prop="username">
-            <el-input v-model="loginForm.username" placeholder="请输入账号"/>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"/>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="login('loginForm')" class="loginBtn">登录</el-button>
-            <el-link :underline="false" class="register-link" href="/register">注册账号</el-link>
-          </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+  <div>
+    <div class="background">
+      <el-image class="backgroundImg" :src="imgUrl"></el-image>
+    </div>
+    <div class="login-container">
+      <el-row>
+        <el-col span="4" offset="10"><h1>用户登录</h1></el-col>
+      </el-row>
+      <el-row>
+        <el-col span="4" offset="10">
+          <el-form status-icon="true" :model="loginForm" :rules="rules" ref="loginForm">
+            <el-form-item prop="username">
+              <el-input v-model="loginForm.username" placeholder="请输入账号"/>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"/>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="login('loginForm')" class="loginBtn">登录</el-button>
+              <el-link :underline="false" class="register-link" href="/register">>>去注册</el-link>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 <script>
   export default {
     data () {
       return {
+        imgUrl: require('../../assets/img/login.jpg'),
         reqUrls: {
           loginFormUrl: '/hospital-web/user/login',
         },
@@ -77,12 +83,19 @@
   }
 </script>
 <style>
-  .whole-container {
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    margin-top: 200px;
+  .login-container {
+    padding-top: 200px;
+  }
+
+  /* 背景图片 */
+  .backgroundImg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
 
   .register-link {
     margin-left: 180px;
   }
+
 </style>

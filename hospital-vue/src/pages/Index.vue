@@ -10,8 +10,8 @@
       <el-main>
         <h1>欢迎来到XXXXX医院挂号系统</h1>
         <el-carousel indicator-position="outside">
-          <el-carousel-item v-for="item in 4" :key="item">
-            <h3>{{ item }}</h3>
+          <el-carousel-item>
+            <el-image :src="url"></el-image>
           </el-carousel-item>
         </el-carousel>
       </el-main>
@@ -31,7 +31,7 @@
     },
     data () {
       return {
-
+        url: require('../assets/img/ad1.jpg')
       }
     }
   }

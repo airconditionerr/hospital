@@ -89,11 +89,13 @@
   }
 
   #login {
+    font-size: 18px;
     line-height: 60px;
   }
 
 
   #register {
+    font-size: 18px;
     line-height: 60px;
   }
 </style>

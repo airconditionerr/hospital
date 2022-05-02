@@ -16,7 +16,7 @@ import java.util.Map;
 public interface DoctorService {
     List<Doctor> getDoctorInfoPage(int pageNum, int pageSize);
 
-    List<Doctor> getDoctorInfoPageByDept(int pageNum, int pageSize, String deptName);
+    List<Doctor> getDoctorInfoPageByDept(int pageNum, int pageSize, int deptId);
 
     int getAllDoctorNum();
 

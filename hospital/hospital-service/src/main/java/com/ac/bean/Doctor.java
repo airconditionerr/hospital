@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 public class Doctor {
     private int id;
     private String doctorName;
-    private String doctorDepartment;   //科室
     private String doctorIntroduction; //相关
     private String doctorSex;  //性别
     private String doctorImg;  //照片
@@ -30,4 +29,5 @@ public class Doctor {
     private String teacherTitle;   //教学职称
     private String doctorAccount;
     private String doctorPassword;
+    private String doctorDepartmentId;   //科室ID
 }

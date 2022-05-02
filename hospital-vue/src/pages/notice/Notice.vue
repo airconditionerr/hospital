@@ -67,7 +67,7 @@
         noticeList: [],
         pageNum: 1,
         reqUrls: {
-          getNoticeInfoPageUrl: '/hospital-web/notice/' + this.pageNum + '/' + 10 // 获取当前页公告信息请求地址
+          // getNoticeInfoPageUrl: '/hospital-web/notice/' + this.pageNum + '/' + 10 // 获取当前页公告信息请求地址
 
         }
       }
@@ -92,7 +92,7 @@
         this.$router.push('/noticeInfo/' + row.noticeId)
       },
       getNoticeInfoPage() {
-        this.$axios.get(this.reqUrls.getNoticeInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/notice/' + this.pageNum + '/' + 10, {}).then(response => {
           this.noticeList = response.data
         })
       }

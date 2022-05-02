@@ -51,22 +51,22 @@ public class OrderRecordController {
     }
 
 
-    @GetMapping(value = "/orderRecord/page/{pageNum}/{pageSize}/{doctorName}")
+    @GetMapping(value = "/orderRecord/page/{pageNum}/{pageSize}/{doctorId}")
     @ResponseBody
-    public List<OrderRecord> getOrderInfoPageByDoctorName(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("doctorName") String doctorName) {
+    public List<OrderRecord> getOrderInfoPageByDoctorId(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("doctorId") String doctorId) {
         log.info("----------------进入获取所有订单信息操作----------------");
-        log.info(String.valueOf(pageNum)+ ", " + String.valueOf(pageSize) + ", " + doctorName);
-        List<OrderRecord> list = orderRecordService.getOrderInfoPageByDoctorName(pageNum, pageSize, doctorName);
+        log.info(String.valueOf(pageNum)+ ", " + String.valueOf(pageSize) + ", " + doctorId);
+        List<OrderRecord> list = orderRecordService.getOrderInfoPageByDoctorId(pageNum, pageSize, doctorId);
         log.info("----------------获取所有订单信息成功----------------");
         return list;
     }
 
 
-    @GetMapping(value = "/orderRecord/num/{doctorName}")
+    @GetMapping(value = "/orderRecord/num/{doctorId}")
     @ResponseBody
-    public int getOrderNumByDoctorName(@PathVariable("doctorName") String doctorName) {
+    public int getOrderNumByDoctorId(@PathVariable("doctorId") String doctorId) {
         log.info("----------------进入获取所有订单信息操作----------------");
-        int num = orderRecordService.getOrderNumByDoctorName(doctorName);
+        int num = orderRecordService.getOrderNumByDoctorId(doctorId);
         log.info("----------------获取所有订单信息成功----------------");
         return num;
     }

@@ -69,7 +69,7 @@
         currentPage: 1,
         pageNum: 1,
         reqUrls: {
-          getOrderInfoPageUrl: '/hospital-web/orderRecord/' + this.pageNum + '/' + 10, // 获取当前用户当前页预约信息请求地址
+          // getOrderInfoPageUrl: '/hospital-web/orderRecord/' + this.pageNum + '/' + 10, // 获取当前用户当前页预约信息请求地址
           cancelUrl: '/hospital-web/appoint/'
         }
       }
@@ -87,7 +87,7 @@
        * 获取当前用户当前页预约信息
        */
       getOrderInfoPage () {
-        this.$axios.get(this.getOrderInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10, {}).then(response => {
           this.orderList = response.data
         })
       },

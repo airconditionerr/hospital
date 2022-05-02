@@ -15,7 +15,7 @@
           <el-table-column
             prop="orderId"
             label="订单id"
-            width="180">
+            width="360">
           </el-table-column>
           <el-table-column
             prop="departmentName"
@@ -69,7 +69,7 @@
         currentPage: 1,
         pageNum: 1,
         reqUrls: {
-          getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'),  // 获取当前用户当前页预约信息请求地址
+          // getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'),  // 获取当前用户当前页预约信息请求地址
           cancelAppointUrl: '/hospital-web/orderRecord/'
         }
       }
@@ -83,7 +83,7 @@
       },
       // 获取当前用户当前页预约信息
       getOrderInfoPage () {
-        this.$axios.get(this.reqUrls.getOrderInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/orderRecord/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'), {}).then(response => {
           this.orderList = response.data
         })
       },

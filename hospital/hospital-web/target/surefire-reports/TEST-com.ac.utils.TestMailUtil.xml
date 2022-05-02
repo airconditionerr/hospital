@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="com.ac.utils.TestMailUtil" time="38.928" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="com.ac.utils.TestMailUtil" time="39.159" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2020.3.2"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_131\jre\bin"/>
     <property name="java.vm.version" value="25.131-b11"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="D:\南航金城\毕业设计\code\hospital"/>
+    <property name="maven.multiModuleProjectDirectory" value="D:\南航金城\毕业设计\hospital\hospital"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="D:\南航金城\毕业设计\code\hospital"/>
+    <property name="user.dir" value="D:\南航金城\毕业设计\hospital\hospital"/>
     <property name="java.runtime.version" value="1.8.0_131-b11"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_131\jre\lib\endorsed"/>
@@ -65,5 +65,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.ac.utils.TestMailUtil" name="testSendEmail" time="38.928"/>
+  <testcase classname="com.ac.utils.TestMailUtil" name="testSendEmail" time="39.159"/>
 </testsuite>

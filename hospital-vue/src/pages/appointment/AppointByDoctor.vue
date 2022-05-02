@@ -61,7 +61,7 @@
         pageNum: 1, // 当前页
         totalNum: 0,
         reqUrls: {
-          getDoctorInfoPageUrl: '/hospital-web/doctor/page/' + this.pageNum + '/' + 10, // 获取当前页医生信息请求地址
+          // getDoctorInfoPageUrl: '/hospital-web/doctor/page/' + this.pageNum + '/' + 10, // 获取当前页医生信息请求地址
           getAllDoctorNumUrl: '/hospital-web/doctor/num'
         }
       }
@@ -84,7 +84,7 @@
        * 获取当前页医生信息
        */
       getDoctorInfoPage () {
-        this.$axios.get(this.reqUrls.getDoctorInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10, {}).then(response => {
           this.doctorList = response.data
         })
       },

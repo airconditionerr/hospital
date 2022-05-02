@@ -38,7 +38,8 @@
                 prop="doctorSex"
                 label="医生性别"
                 width="180">
-              </el-table-column><el-table-column
+              </el-table-column>
+              <el-table-column
                 prop="doctorPosition"
                 label="医生职称"
                 width="180">
@@ -90,7 +91,7 @@
         pageNum: 1, //当前页
         totalNum: 0,
         reqUrls: {
-          getDoctorInfoPageByDeptUrl: '/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.deptInfo.departmentName,  // 获取当前页医生信息请求地址
+          // getDoctorInfoPageByDeptUrl: '/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.deptInfo.departmentName ,  // 获取当前页医生信息请求地址
           getThisDeptInfo: '/hospital-web/dept/info/' + this.$route.params.id
         }
       }
@@ -112,7 +113,7 @@
        * 获取当前页医生信息
        */
       getDoctorInfoPageByDept () {
-        this.$axios.get(this.reqUrls.getDoctorInfoPageByDeptUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.$route.params.id, {}).then(response => {
           this.doctorList = response.data
         })
       },

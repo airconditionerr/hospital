@@ -70,12 +70,12 @@
         currentPage: 1,
         pageNum: 1,
         doctorName: null,
-        totalNum : 0,
+        totalNum: 0,
         reqUrls: {
-          getDoctorInfoUrl: '/hospital-web/doctor/info/' + sessionStorage.getItem('doctorId'),
-          getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/',
-          cancelUrl: '/hospital-web/orderRecord/' + row.orderId,
-          finishUrl: '/hospital-web/orderRecord/' + row.orderId,
+          // getDoctorInfoUrl: '/hospital-web/doctor/info/' + sessionStorage.getItem('doctorId'),
+          // getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/',
+          // cancelUrl: '/hospital-web/orderRecord/' + row.orderId,
+          // finishUrl: '/hospital-web/orderRecord/' + row.orderId,
           getTotalNumUrl: '/hospital-web/orderRecord/num/'
         }
       }
@@ -89,43 +89,39 @@
         this.pageNum = val
         this.getOrderInfoPage()
       },
-      /**
-       * 获取当前医生当前页预约信息
-       */
-      getOrderInfoPage () {
-        this.$axios.get(this.reqUrls.getDoctorInfoUrl).then(response => {
-          this.$axios.get(this.reqUrls.getOrderInfoPageUrl + response.data.doctorName, {}).then(response => {
-            this.orderList = response.data
-          })
-        })
-      },
       toOrderInfo (row) {
         this.$router.push('/doctorOrderInfo/' + row.orderId)
       },
-      cancel () {
-        this.$axios.delete(this.reqUrls.cancelUrl, {}).then(response => {
+      cancel (row) {
+        this.$axios.delete('/hospital-web/orderRecord/' + row.orderId, {}).then(response => {
           if (response.data) {
             this.$message('取消成功')
             this.getOrderInfoPage()
           }
         })
       },
-      finish () {
-        this.$axios.put(this.reqUrls.finishUrl).then(response => {
-          if (response.data){
+      finish (row) {
+        this.$axios.put('/hospital-web/orderRecord/' + row.orderId).then(response => {
+          if (response.data) {
             this.$message('预约完成')
           } else {
             this.$message('预约完成失败')
           }
         })
       },
-      getTotalNum() {
-        this.$axios.get(this.reqUrls.getDoctorInfoUrl).then(response => {
-          this.$axios.get(this.reqUrls.getTotalNumUrl + response.data.doctorName, {}).then(response => {
-            this.totalNum = response.data.size
-          })
+      getTotalNum () {
+        this.$axios.get('/hospital-web/orderRecord/num/' + sessionStorage.getItem('doctorId'), {}).then(response => {
+          this.totalNum = response.data.size
         })
-      }
+      },
+      /**
+       * 获取当前医生当前页预约信息
+       */
+      getOrderInfoPage () {
+        this.$axios.get('/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('doctorId'), {}).then(response => {
+          this.orderList = response.data
+        })
+      },
     },
     created () {
       this.getTotalNum()

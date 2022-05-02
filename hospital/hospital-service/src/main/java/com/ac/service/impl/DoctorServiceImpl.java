@@ -105,16 +105,16 @@ public class DoctorServiceImpl implements DoctorService {
      *
      * @param pageNum  页码
      * @param pageSize 页面大小
-     * @param deptName   部门id
+     * @param deptId   部门id
      * @return
      */
     @Override
-    public List<Doctor> getDoctorInfoPageByDept(int pageNum, int pageSize, String deptName) {
+    public List<Doctor> getDoctorInfoPageByDept(int pageNum, int pageSize, int deptId) {
         Map<String, Object> map = new HashMap<>();
         int offset = (pageNum - 1) * pageSize;
         map.put("offset", offset);
         map.put("pageSize", pageSize);
-        map.put("departmentName", deptName);
+        map.put("departmentId", deptId);
         return doctorDao.getDoctorInfoPageByDept(map);
     }
 

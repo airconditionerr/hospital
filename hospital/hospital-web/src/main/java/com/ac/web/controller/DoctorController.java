@@ -26,21 +26,21 @@ public class DoctorController {
     private DoctorService doctorService;
 
     /**
-     * 根据部门名称获取医生信息
+     * 根据部门Id获取医生信息
      *
      * @param pageNum  页码
      * @param pageSize 页面大小
-     * @param deptName   部门
+     * @param deptId   部门Id
      * @return
      */
-    @GetMapping(value = "/doctor/{pageNum}/{pageSize}/{deptName}")
+    @GetMapping(value = "/doctor/page/{pageNum}/{pageSize}/{deptId}")
     @ResponseBody
-    public List<Doctor> getDoctorInfoPageByDept(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("deptName") String deptName) {
+    public List<Doctor> getDoctorInfoPageByDept(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("deptId") int deptId) {
         log.info("----------------进入获取当前科室当前页所有医生信息操作----------------");
         log.info("----------------当前页码" + String.valueOf(pageNum) + "----------------");
         log.info("----------------页面大小" + String.valueOf(pageNum) + "----------------");
-        log.info("----------------科室名称" + String.valueOf(deptName) + "----------------");
-        List<Doctor> list = doctorService.getDoctorInfoPageByDept(pageNum, pageSize, deptName);
+        log.info("----------------科室名称" + String.valueOf(deptId) + "----------------");
+        List<Doctor> list = doctorService.getDoctorInfoPageByDept(pageNum, pageSize, deptId);
         log.info("----------------获取当前科室当前页所有医生信息成功----------------");
         return list;
     }

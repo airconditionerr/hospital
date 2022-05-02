@@ -11,7 +11,7 @@
     <select id="getDoctorInfoPageByDept" resultType="com.ac.bean.Doctor">
         select *
         from doctor
-        where doctor_department = #{departmentName} limit #{offset}
+        where doctor_department_id = #{departmentId} limit #{offset}
             , #{pageSize}
     </select>
 

@@ -154,7 +154,7 @@
         this.dialogVisible = false
       },
       getUserEmailByUserId () {
-        this.$axios.get('/hospital-web/user/' + sessionStorage.getItem('userId'), {}).then(response => {
+        this.$axios.get('/hospital-web/user/info/' + sessionStorage.getItem('userId'), {}).then(response => {
           this.userEmail = response.data.userEmail
         })
       }

@@ -33,15 +33,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--<filter>-->
-    <!--    <filter-name>TokenCheckFilter</filter-name>-->
-    <!--    <filter-class>com.ac.filter.TokenCheckFilter</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--    <filter-name>TokenCheckFilter</filter-name>-->
-    <!--    <url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
-
     <!--DispatcherServlet-->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>

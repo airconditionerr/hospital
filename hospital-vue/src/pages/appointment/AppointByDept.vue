@@ -70,7 +70,7 @@
         pageNum: 1, // 当前页
         totalNum: 0,
         reqUrls: {
-          getDeptInfoPageUrl: '/hospital-web/dept/page/' + this.pageNum + '/' + 10, // 获取当前页科室信息请求地址
+          // getDeptInfoPageUrl: '/hospital-web/dept/page/' + this.pageNum + '/' + 10, // 获取当前页科室信息请求地址
           getAllDeptNumUrl: '/hospital-web/dept/num'
         }
       }
@@ -88,7 +88,7 @@
        * 获取当前页科室信息
        */
       getDeptInfoPage () {
-        this.$axios.get(this.getDeptInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/dept/page/' + this.pageNum + '/' + 10, {}).then(response => {
           this.deptList = response.data
         })
       },

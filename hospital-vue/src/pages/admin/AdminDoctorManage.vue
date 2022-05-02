@@ -70,7 +70,7 @@
         pageNum: 1,
         totalNum: 0,
         reqUrls: {
-          getDoctorInfoPageUrl: '/hospital-web/doctor/' + this.pageNum + '/' + 10, // 获取当前用户当前页预约信息请求地址
+          // getDoctorInfoPageUrl: '/hospital-web/doctor/' + this.pageNum + '/' + 10, // 获取当前用户当前页预约信息请求地址
           deleteDoctorUrl: '/hospital-web/doctor/',
           getAllDoctorNumUrl: '/hospital-web/doctor/num'
         }
@@ -89,7 +89,7 @@
        * 获取用户信息
        */
       getDoctorInfoPage () {
-        this.$axios.get(this.getDoctorInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10, {}).then(response => {
           this.doctorList = response.data
         })
       },

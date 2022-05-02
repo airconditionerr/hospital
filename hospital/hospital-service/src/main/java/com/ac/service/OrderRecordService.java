@@ -37,9 +37,9 @@ public interface OrderRecordService {
      */
     OrderRecord getOrderRecordInfo(String orderId);
 
-    List<OrderRecord> getOrderInfoPageByDoctorName(int pageNum, int pageSize, String doctorName);
+    List<OrderRecord> getOrderInfoPageByDoctorId(int pageNum, int pageSize, String doctorId);
 
     boolean finish(String orderId);
 
-    int getOrderNumByDoctorName(String doctorName);
+    int getOrderNumByDoctorId(String doctorId);
 }

@@ -1,29 +1,35 @@
 <template>
-  <div class="whole-container">
-    <el-row>
-      <el-col span="4" offset="10"><h1>医生登录</h1></el-col>
-    </el-row>
-    <el-row class="loginRow">
-      <el-col span="4" offset="10">
-        <el-form status-icon="true" :model="doctorLoginForm" :rules="rules" ref="doctorLoginForm">
-          <el-form-item prop="username">
-            <el-input v-model="doctorLoginForm.doctorAccount" placeholder="请输入账号"/>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input type="password" v-model="doctorLoginForm.doctorPassword" placeholder="请输入密码"/>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="login('doctorLoginForm')" class="loginBtn">登录</el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+  <div>
+    <div class="background">
+      <el-image class="backgroundImg" :src="imgUrl"></el-image>
+    </div>
+    <div class="whole-container">
+      <el-row>
+        <el-col span="4" offset="10"><h1>医生登录</h1></el-col>
+      </el-row>
+      <el-row class="loginRow">
+        <el-col span="4" offset="10">
+          <el-form status-icon="true" :model="doctorLoginForm" :rules="rules" ref="doctorLoginForm">
+            <el-form-item prop="username">
+              <el-input v-model="doctorLoginForm.doctorAccount" placeholder="请输入账号"/>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input type="password" v-model="doctorLoginForm.doctorPassword" placeholder="请输入密码"/>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="login('doctorLoginForm')" class="loginBtn">登录</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 <script>
   export default {
     data () {
       return {
+        imgUrl: require('../../assets/img/login.jpg'),
         doctorLoginForm: {
           doctorAccount: '',
           doctorPassword: '',
@@ -73,6 +79,12 @@
 <style>
   .whole-container {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    margin-top: 200px;
+    padding-top: 200px;
+  }
+
+  .backgroundImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
 </style>

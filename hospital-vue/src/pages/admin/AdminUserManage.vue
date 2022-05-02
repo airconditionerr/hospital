@@ -67,11 +67,11 @@
       return {
         userList: [],
         currentPage: 1,
-        pageNum: 1,
-        reqUrls: {
-          getUserInfoPageUrl: '/hospital-web/user/page/' + this.pageNum + '/' + 10,  // 获取当前用户当前页预约信息请求地址
-          deleteUserUrl: '/hospital-web/user/' + row.userId
-        }
+        pageNum: 1
+        // reqUrls: {
+          // getUserInfoPageUrl: '/hospital-web/user/page/' + this.pageNum + '/' + 10,  // 获取当前用户当前页预约信息请求地址
+          // deleteUserUrl: '/hospital-web/user/' + row.userId
+        // }
       }
     },
     methods: {
@@ -87,7 +87,7 @@
        * 获取用户信息
        */
       getUserInfoPage () {
-        this.$axios.get(this.getUserInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10, {}).then(response => {
           this.userList = response.data
         })
       },
@@ -96,7 +96,7 @@
        * @param row
        */
       deleteUser (row) {
-        this.$axios.delete(this.reqUrls.deleteUserUrl, {}).then(response => {
+        this.$axios.delete('/hospital-web/user/' + row.userId, {}).then(response => {
           if (response.data) {
             this.$message('删除成功')
             this.getUserInfoPage()

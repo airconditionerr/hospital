@@ -20,14 +20,14 @@
     <select id="getOrderInfoPageByDoctorId" resultType="com.ac.bean.OrderRecord">
         select *
         from order_record
-        where doctor_name = #{doctorName} limit #{offset}
+        where doctor_id = #{doctorId} limit #{offset}
             , #{pageSize}
     </select>
 
-    <select id="getOrderNumByDoctorName" resultType="Integer">
+    <select id="getOrderNumByDoctorId" resultType="Integer">
         select count(*)
         from order_record
-        where doctor_name = #{doctorName}
+        where doctor_id = #{doctorId}
     </select>
 
     <select id="getOrderInfoPage2" resultType="com.ac.bean.OrderRecord">
@@ -44,7 +44,7 @@
     <update id="notifyUser">
         update order_record
         set is_send     = #{idSend},
-            notify_time = #{notifyTime}
+--             notify_time = #{notifyTime}
         where order_id = #{orderId}
     </update>
 

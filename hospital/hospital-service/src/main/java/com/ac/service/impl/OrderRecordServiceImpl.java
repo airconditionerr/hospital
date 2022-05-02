@@ -84,20 +84,20 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
-    public int getOrderNumByDoctorName(String doctorName) {
+    public int getOrderNumByDoctorId(String doctorId) {
         Map<String, Object> map = new HashMap<>();
-        map.put("doctorName", doctorName);
-        int num = orderRecordDao.getOrderNumByDoctorName(map);
+        map.put("doctorId", doctorId);
+        int num = orderRecordDao.getOrderNumByDoctorId(map);
         return num;
     }
 
     @Override
-    public List<OrderRecord> getOrderInfoPageByDoctorName(int pageNum, int pageSize, String doctorName) {
+    public List<OrderRecord> getOrderInfoPageByDoctorId(int pageNum, int pageSize, String doctorId) {
         Map<String, Object> map = new HashMap<>();
         int offset = (pageNum - 1) * pageSize;
         map.put("offset", offset);
         map.put("pageSize", pageSize);
-        map.put("doctorName", doctorName);
+        map.put("doctorId", doctorId);
         List<OrderRecord> list = orderRecordDao.getOrderInfoPageByDoctorId(map);
         return list;
     }

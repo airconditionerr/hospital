@@ -65,7 +65,7 @@
         pageNum: 1,
         totalNum: 0,
         reqUrls: {
-          getHelpInfoPageUrl: '/hospital-web/helpCenter/page/' + this.pageNum + '/' + 10, // 获取当前页公告信息请求地址
+          // getHelpInfoPageUrl: '/hospital-web/helpCenter/page/' + this.pageNum + '/' + 10, // 获取当前页公告信息请求地址
           getAllHelpNumUrl: '/hospital-web/helpCenter/num'
         }
       }
@@ -95,7 +95,7 @@
         this.$router.push('/helpInfo/' + row.helpId)
       },
       getHelpInfoPage () {
-        this.$axios.get(this.getHelpInfoPageUrl, {}).then(response => {
+        this.$axios.get('/hospital-web/helpCenter/page/' + this.pageNum + '/' + 10, {}).then(response => {
           this.helpList = response.data
         })
       }

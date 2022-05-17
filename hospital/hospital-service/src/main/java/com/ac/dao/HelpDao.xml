@@ -3,15 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ac.dao.HelpDao">
+    <!--获取当前页帮助-->
     <select id="getHelpInfoPage" resultType="com.ac.bean.HelpCenter">
         select * from help_center limit #{offset}, #{pageSize}
     </select>
 
+    <!--获取当前帮助信息-->
     <select id="getThisHelpInfo" resultType="com.ac.bean.HelpCenter">
         select * from help_center where help_id = #{id}
     </select>
 
-    <select id="getAllHelpNum">
+    <!--帮助总数-->
+    <select id="getAllHelpNum" resultType="Integer">
         select count(*) from help_center
     </select>
 </mapper>

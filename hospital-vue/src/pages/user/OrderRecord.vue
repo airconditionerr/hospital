@@ -68,6 +68,7 @@
         orderList: [],
         currentPage: 1,
         pageNum: 1,
+        totalNum: 0,
         reqUrls: {
           // getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'),  // 获取当前用户当前页预约信息请求地址
           cancelAppointUrl: '/hospital-web/orderRecord/'
@@ -101,9 +102,15 @@
             this.getOrderInfoPage()
           }
         })
+      },
+      getAllOrderNum () {
+        this.$axios.get('/hospital-web/orderRecord/num/user/' + sessionStorage.getItem('userId'), {}).then(response => {
+          this.totalNum = response.data
+        })
       }
     },
     created () {
+      this.getAllOrderNum()
       this.getOrderInfoPage()
     }
   }

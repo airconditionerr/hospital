@@ -72,7 +72,7 @@
         this.$router.push('/orderRecord')
       },
       cancel () {
-        this.$axios.delete('/hospital-web/appoint/' + this.$route.params.orderId, {}).then(response => {
+        this.$axios.delete('/hospital-web/orderRecord/' + this.$route.params.orderId, {}).then(response => {
           if (response.data) {
             this.$message('取消成功')
             this.$router.push('/orderRecord')
@@ -82,7 +82,7 @@
         })
       },
       getOrderRecordInfo () {
-        this.$axios.get('/hospital-web/orderRecord/' + this.$route.params.orderId, {}).then(response => {
+        this.$axios.get('/hospital-web/orderRecord/info/' + this.$route.params.orderId, {}).then(response => {
           this.orderRecordInfo = response.data
           if (this.orderRecordInfo.isSuccess == 1){
             this.activities[0].visible = true

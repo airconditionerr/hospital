@@ -72,6 +72,17 @@ public class OrderRecordController {
     }
 
 
+    @GetMapping(value = "/orderRecord/num/user/{userId}")
+    @ResponseBody
+    public int getOrderNumByUserId(@PathVariable("userId") String userId) {
+        log.info("----------------进入获取所有订单信息操作----------------");
+        int num = orderRecordService.getOrderNumByUserId(userId);
+        log.info("----------------获取所有订单信息成功----------------");
+        return num;
+    }
+
+
+
     @GetMapping(value = "/orderRecord/page/{pageNum}/{pageSize}")
     @ResponseBody
     public List<OrderRecord> getOrderInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {

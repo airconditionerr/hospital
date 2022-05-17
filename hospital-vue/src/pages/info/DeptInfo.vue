@@ -62,10 +62,9 @@
               </el-pagination>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="预约须知" name="second">预约须知</el-tab-pane>
-          <el-tab-pane label="医院简介" name="third">医生简介</el-tab-pane>
-          <el-tab-pane label="医院设备" name="fourth">医生特长</el-tab-pane>
-          <el-tab-pane label="医院荣誉" name="fifth">医生评论</el-tab-pane>
+          <el-tab-pane label="科室简介" name="third">{{deptInfo.departmentIntroduction}}</el-tab-pane>
+          <el-tab-pane label="科室设备" name="fourth">{{deptInfo.departmentEquipment}}</el-tab-pane>
+          <el-tab-pane label="科室荣誉" name="fifth">{{deptInfo.departmentHonor}}</el-tab-pane>
         </el-tabs>
       </el-main>
     </el-container>

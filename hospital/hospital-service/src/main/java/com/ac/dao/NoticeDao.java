@@ -16,4 +16,6 @@ public interface NoticeDao {
     List<Notice> getNoticeInfoPage(Map<String, Object> map);
 
     Notice getThisNoticeInfo(Map<String, Object> map);
+
+    int getAllNoticeNum();
 }

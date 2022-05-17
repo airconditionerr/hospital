@@ -43,4 +43,9 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = noticeDao.getThisNoticeInfo(map);
         return notice;
     }
+
+    @Override
+    public int getAllNoticeNum() {
+        return noticeDao.getAllNoticeNum();
+    }
 }

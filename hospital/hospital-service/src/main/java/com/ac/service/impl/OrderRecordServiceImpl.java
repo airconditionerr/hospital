@@ -76,7 +76,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     @Override
     public boolean finish(String orderId) {
         int num = orderRecordDao.finish(orderId);
-        if (num != 0){
+        if (num != 0) {
             return true;
         } else {
             return false;
@@ -92,6 +92,11 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
+    public int getOrderNumByUserId(String userId) {
+        return orderRecordDao.getOrderNumByUserId(userId);
+    }
+
+    @Override
     public List<OrderRecord> getOrderInfoPageByDoctorId(int pageNum, int pageSize, String doctorId) {
         Map<String, Object> map = new HashMap<>();
         int offset = (pageNum - 1) * pageSize;
@@ -104,6 +109,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     /**
      * 取消预约
+     *
      * @param orderId
      * @return
      */
@@ -123,6 +129,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     /**
      * 获取预约信息
+     *
      * @param orderId
      * @return
      */

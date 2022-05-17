@@ -18,12 +18,12 @@
           <el-table-column
             prop="noticeId"
             label="公告id"
-            width="180" v-if="false">
+            width="360" v-if="false">
           </el-table-column>
           <el-table-column
             prop="noticeTitle"
             label="公告名称"
-            width="180">
+            width="360">
           </el-table-column><el-table-column
             prop="noticeTime"
             label="公告时间"
@@ -66,9 +66,10 @@
         currentPage: 1,
         noticeList: [],
         pageNum: 1,
+        totalNum: 0,
         reqUrls: {
+          getAllNoticeNumUrl: '/hospital-web/helpCenter/num'
           // getNoticeInfoPageUrl: '/hospital-web/notice/' + this.pageNum + '/' + 10 // 获取当前页公告信息请求地址
-
         }
       }
     },
@@ -95,9 +96,15 @@
         this.$axios.get('/hospital-web/notice/' + this.pageNum + '/' + 10, {}).then(response => {
           this.noticeList = response.data
         })
+      },
+      getAllNoticeNum() {
+        this.$axios.get(this.reqUrls.getAllNoticeNumUrl, {}).then(response => {
+          this.totalNum = response.data
+        })
       }
     },
     created () {
+      this.getAllNoticeNum()
       this.getNoticeInfoPage()
     }
   }

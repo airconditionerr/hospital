@@ -73,10 +73,8 @@
             </el-dialog>
 
           </el-tab-pane>
-          <el-tab-pane label="预约须知" name="second">预约须知</el-tab-pane>
-          <el-tab-pane label="医院简介" name="third">医生简介</el-tab-pane>
-          <el-tab-pane label="医院设备" name="fourth">医生特长</el-tab-pane>
-          <el-tab-pane label="医院荣誉" name="fifth">医生评论</el-tab-pane>
+          <el-tab-pane label="医生简介" name="third">{{doctorInfo.doctorIntroduction}}</el-tab-pane>
+          <el-tab-pane label="医生特长" name="fourth">{{doctorInfo.doctorForte}}</el-tab-pane>
         </el-tabs>
       </el-main>
     </el-container>

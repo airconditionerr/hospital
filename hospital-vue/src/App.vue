@@ -17,4 +17,7 @@
     margin: 0;
     padding: 0;
   }
-</style>
+  .el-header {
+    background-color: #409EFF;
+  }
+ </style>

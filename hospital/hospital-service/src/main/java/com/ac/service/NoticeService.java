@@ -15,4 +15,6 @@ public interface NoticeService {
     List<Notice> getNoticeInfoPage(int pageNum, int pageSize);
 
     Notice getThisNoticeInfo(String id);
+
+    int getAllNoticeNum();
 }

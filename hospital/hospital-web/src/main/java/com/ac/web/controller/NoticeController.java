@@ -28,7 +28,7 @@ public class NoticeController {
 
     @GetMapping(value = "/notice/{pageNum}/{pageSize}")
     @ResponseBody
-    public List<Notice> getNoticeInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageNum") int pageSize) {
+    public List<Notice> getNoticeInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
         return noticeService.getNoticeInfoPage(pageNum, pageSize);
     }
 
@@ -40,6 +40,13 @@ public class NoticeController {
         Notice notice = noticeService.getThisNoticeInfo(id);
         log.info("----------------获取当前公告信息成功----------------");
         return notice;
+    }
+
+
+    @GetMapping(value = "/notice/num")
+    @ResponseBody
+    public int getAllNoticeNum(){
+        return noticeService.getAllNoticeNum();
     }
 
 }

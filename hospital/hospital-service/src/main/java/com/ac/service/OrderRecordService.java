@@ -42,4 +42,6 @@ public interface OrderRecordService {
     boolean finish(String orderId);
 
     int getOrderNumByDoctorId(String doctorId);
+
+    int getOrderNumByUserId(String userId);
 }

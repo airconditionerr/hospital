@@ -36,4 +36,6 @@ public interface OrderRecordDao {
     int finish(String orderId);
 
     int getOrderNumByDoctorId(Map<String, Object> map);
+
+    int getOrderNumByUserId(String userId);
 }

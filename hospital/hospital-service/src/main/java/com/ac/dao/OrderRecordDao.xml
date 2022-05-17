@@ -30,6 +30,12 @@
         where doctor_id = #{doctorId}
     </select>
 
+    <select id="getOrderNumByUserId" resultType="Integer">
+        select count(*)
+        from order_record
+        where user_id = #{userId}
+    </select>
+
     <select id="getOrderInfoPage2" resultType="com.ac.bean.OrderRecord">
         select *
         from order_record limit #{offset}, #{pageSize}
@@ -59,4 +65,6 @@
         from order_record
         where order_id = #{orderId}
     </select>
+
+
 </mapper>

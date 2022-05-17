@@ -24,7 +24,7 @@
           <el-table-column
             prop="helpTitle"
             label="帮助"
-            width="180">
+            width="540">
           </el-table-column>
           <el-table-column
             label="操作">
@@ -93,6 +93,7 @@
        */
       handleClick (row) {
         this.$router.push('/helpInfo/' + row.helpId)
+
       },
       getHelpInfoPage () {
         this.$axios.get('/hospital-web/helpCenter/page/' + this.pageNum + '/' + 10, {}).then(response => {

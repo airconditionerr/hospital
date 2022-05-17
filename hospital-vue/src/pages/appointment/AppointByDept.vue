@@ -14,11 +14,13 @@
         <el-table
           :data="deptList"
           stripe
-          style="width: 100%">
+          style="width: 100%"
+          size="medium"
+        >
           <el-table-column
             prop="id"
             label="科室id"
-            width="180" v-if="false">
+            width="180">
           </el-table-column>
           <el-table-column
             prop="departmentName"
@@ -104,7 +106,7 @@
        * 预约按钮
        * @param row
        */
-      handleClick(row) {
+      handleClick (row) {
         this.$router.push('/deptInfo/' + row.id)
       }
     },

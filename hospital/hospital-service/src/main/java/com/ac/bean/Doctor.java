@@ -29,5 +29,6 @@ public class Doctor {
     private String teacherTitle;   //教学职称
     private String doctorAccount;
     private String doctorPassword;
+    private String doctorDepartment;   //科室
     private String doctorDepartmentId;   //科室ID
 }

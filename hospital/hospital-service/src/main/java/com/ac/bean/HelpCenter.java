@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @EqualsAndHashCode
 @Component
 public class HelpCenter {
-    private String helpId;
+    private int helpId;
     private String helpTitle;
     private String helpContent;
 }

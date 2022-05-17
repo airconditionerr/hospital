@@ -10,4 +10,8 @@
     <select id="getThisNoticeInfo" resultType="com.ac.bean.Notice">
         select * from notice where notice_id = #{id}
     </select>
+
+    <select id="getAllNoticeNum" resultType="Integer">
+        select count(*) from notice
+    </select>
 </mapper>

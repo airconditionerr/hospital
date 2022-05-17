@@ -73,6 +73,10 @@
 </script>
 <style>
   .aside-banner{
-    height: 91vh;
+    height: 93vh;
+  }
+
+  .el-menu{
+    background-color: #F2F6FC;
   }
 </style>

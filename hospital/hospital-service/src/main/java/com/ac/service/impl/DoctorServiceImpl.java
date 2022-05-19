@@ -1,8 +1,6 @@
 package com.ac.service.impl;
 
 import com.ac.bean.Doctor;
-import com.ac.bean.User;
-import com.ac.dao.DeptDao;
 import com.ac.dao.DoctorDao;
 import com.ac.exception.LoginException;
 import com.ac.service.DoctorService;
@@ -30,26 +28,6 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private DoctorDao doctorDao;
-    @Autowired
-    private DeptDao deptDao;
-
-
-    /**
-     * 获取医生信息
-     *
-     * @param pageNum  页码
-     * @param pageSize 页面大小
-     * @return
-     */
-    @Override
-    public List<Doctor> getDoctorInfoPage(int pageNum, int pageSize) {
-        Map<String, Object> map = new HashMap<>();
-        int offset = (pageNum - 1) * pageSize;
-        map.put("offset", offset);
-        map.put("pageSize", pageSize);
-        List<Doctor> list = doctorDao.getDoctorInfoPage(map);
-        return list;
-    }
 
 
     @Override
@@ -64,7 +42,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Map<String, Object> isLogin(String doctorId) {
-        Map<String,Object> mapRet = new HashMap<>();
+        Map<String, Object> mapRet = new HashMap<>();
         mapRet.put("success", true);
         Map<String, Object> payload = new HashMap<String, Object>();
         Date date = new Date();
@@ -74,6 +52,21 @@ public class DoctorServiceImpl implements DoctorService {
         String token = TokenUtil.createToken(payload);
         mapRet.put("token", token);
         return mapRet;
+    }
+
+    @Override
+    public List<Doctor> searchDoctorInfoPage(int pageNum, int pageSize, String keyWord, int deptId) {
+        Map<String, Object> map = new HashMap<>();
+        int offset = (pageNum - 1) * pageSize;
+        map.put("offset", offset);
+        map.put("pageSize", pageSize);
+        if (!"null".equals(keyWord)) {
+            map.put("keyWord", keyWord);
+        }
+        if (deptId != 0) {
+            map.put("deptId", deptId);
+        }
+        return doctorDao.searchDoctorInfoPage(map);
     }
 
     @Override

@@ -78,7 +78,7 @@
     },
     methods: {
       goBack () {
-        this.$router.push('/adminOrderManage')
+        this.$router.push('/doctorOrderManage')
       },
       cancel () {
         this.$axios.delete(this.reqUrls.cancelUrl, {}).then(response => {

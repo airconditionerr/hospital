@@ -68,8 +68,7 @@
         pageNum: 1,
         totalNum: 0,
         reqUrls: {
-          getAllNoticeNumUrl: '/hospital-web/helpCenter/num'
-          // getNoticeInfoPageUrl: '/hospital-web/notice/' + this.pageNum + '/' + 10 // 获取当前页公告信息请求地址
+          getAllNoticeNumUrl: '/hospital-web/notice/num'
         }
       }
     },

@@ -39,6 +39,15 @@
               <el-button @click="cancelAppoint(scope.row)" type="text" size="mini">取消</el-button>
             </template>
           </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
+            </template>
+          </el-table-column>
         </el-table>
         <!--分页-->
         <div class="block">
@@ -69,8 +78,8 @@
         currentPage: 1,
         pageNum: 1,
         totalNum: 0,
+        search: '',
         reqUrls: {
-          // getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'),  // 获取当前用户当前页预约信息请求地址
           cancelAppointUrl: '/hospital-web/orderRecord/'
         }
       }
@@ -80,11 +89,10 @@
       // 翻页
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getOrderInfoPage()
       },
       // 获取当前用户当前页预约信息
       getOrderInfoPage () {
-        this.$axios.get('/hospital-web/orderRecord/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'), {}).then(response => {
+        this.$axios.get('/hospital-web/orderRecord/page/user/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'), {}).then(response => {
           this.orderList = response.data
         })
       },
@@ -109,9 +117,40 @@
         })
       }
     },
-    created () {
-      this.getAllOrderNum()
-      this.getOrderInfoPage()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == '') { //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/orderRecord/page/user/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'), {}).then(response => {
+              this.orderList = response.data
+              this.getAllOrderNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/orderRecord/page/search/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.orderList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == '') {
+            this.$axios.get('/hospital-web/orderRecord/page/user/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('userId'), {}).then(response => {
+              this.orderList = response.data
+              this.getAllOrderNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/orderRecord/page/search/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.orderList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
   }
 </script>

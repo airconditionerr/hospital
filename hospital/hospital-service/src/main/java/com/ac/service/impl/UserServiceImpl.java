@@ -1,5 +1,6 @@
 package com.ac.service.impl;
 
+import com.ac.bean.Doctor;
 import com.ac.bean.User;
 import com.ac.dao.UserDao;
 import com.ac.exception.LoginException;
@@ -154,24 +155,6 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * 获取一页用户信息
-     *
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    @Override
-    public List<User> getUserInfoPage(int pageNum, int pageSize) {
-        Map<String, Object> map = new HashMap<>();
-        int offset = (pageNum - 1) * pageSize;
-        map.put("offset", offset);
-        map.put("pageSize", pageSize);
-        List<User> list = userDao.getUserInfoPage(map);
-        return list;
-    }
-
-
-    /**
      * 删除用户
      *
      * @param userId
@@ -205,5 +188,22 @@ public class UserServiceImpl implements UserService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int getUserNum() {
+        return userDao.getUserNum();
+    }
+
+    @Override
+    public List<User> searchUserInfoPage(int pageNum, int pageSize, String keyWord) {
+        Map<String, Object> map = new HashMap<>();
+        int offset = (pageNum - 1) * pageSize;
+        map.put("offset", offset);
+        map.put("pageSize", pageSize);
+        if (!"null".equals(keyWord)) {
+            map.put("keyWord", keyWord);
+        }
+        return userDao.searchUserInfoPage(map);
     }
 }

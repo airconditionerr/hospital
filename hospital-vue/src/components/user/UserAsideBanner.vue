@@ -19,4 +19,11 @@
   }
 </script>
 <style>
+  .aside-banner{
+    height: 93vh;
+  }
+
+  .el-menu{
+    background-color: #F2F6FC;
+  }
 </style>

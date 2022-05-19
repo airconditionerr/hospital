@@ -1,5 +1,6 @@
 package com.ac.service;
 
+import com.ac.bean.Doctor;
 import com.ac.bean.User;
 import com.ac.exception.LoginException;
 import com.ac.exception.RegisterException;
@@ -66,16 +67,6 @@ public interface UserService {
 
 
     /**
-     * 获取一页用户信息
-     *
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    List<User> getUserInfoPage(int pageNum, int pageSize);
-
-
-    /**
      * 删除用户
      *
      * @param userId
@@ -91,4 +82,8 @@ public interface UserService {
      * @return
      */
     boolean updateUserInfo(Map<String, String> mapUpdateData);
+
+    int getUserNum();
+
+    List<User> searchUserInfoPage(int pageNum, int pageSize, String keyWord);
 }

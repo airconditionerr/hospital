@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ac.dao.DoctorDao">
-    <select id="getDoctorInfoPage" resultType="com.ac.bean.Doctor">
-        select *
-        from doctor limit #{offset}, #{pageSize}
-    </select>
+    <!--<select id="getDoctorInfoPage" resultType="com.ac.bean.Doctor">-->
+    <!--    select *-->
+    <!--    from doctor limit #{offset}, #{pageSize}-->
+    <!--</select>-->
 
     <select id="getDoctorInfoPageByDept" resultType="com.ac.bean.Doctor">
         select *
@@ -33,7 +33,10 @@
     </delete>
 
     <update id="updateDoctorInfo">
-        update doctor set doctor_department = #{doctorDepartment}, doctor_position = #{doctorPosition} where id = #{id}
+        update doctor
+        set doctor_department = #{doctorDepartment},
+            doctor_position   = #{doctorPosition}
+        where id = #{id}
     </update>
 
     <select id="loginByUsername" resultType="com.ac.bean.Doctor">
@@ -41,5 +44,19 @@
         from doctor
         where doctor_account = #{doctorAccount}
           and doctor_password = #{doctorPassword}
+    </select>
+
+    <select id="searchDoctorInfoPage" resultType="com.ac.bean.Doctor">
+        select *
+        from doctor
+        <if test="keyWord != null">
+            where doctor_name like concat('%', #{keyWord}, '%')
+            or doctor_department like concat('%', #{keyWord}, '%')
+        </if>
+        <if test="deptId != null">
+            where doctor_department_id = #{deptId}
+        </if>
+        limit #{offset}
+        , #{pageSize}
     </select>
 </mapper>

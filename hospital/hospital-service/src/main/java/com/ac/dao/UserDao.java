@@ -49,15 +49,6 @@ public interface UserDao {
 
 
     /**
-     * 获取一页用户信息
-     *
-     * @param map
-     * @return
-     */
-    List<User> getUserInfoPage(Map<String, Object> map);
-
-
-    /**
      * 删除用户
      *
      * @param map
@@ -73,4 +64,8 @@ public interface UserDao {
      * @return
      */
     int updateUserInfo(Map<String, String> mapUpdateData);
+
+    int getUserNum();
+
+    List<User> searchUserInfoPage(Map<String, Object> map);
 }

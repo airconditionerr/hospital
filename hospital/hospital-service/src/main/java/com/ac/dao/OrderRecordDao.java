@@ -38,4 +38,8 @@ public interface OrderRecordDao {
     int getOrderNumByDoctorId(Map<String, Object> map);
 
     int getOrderNumByUserId(String userId);
+
+    int getOrderNum();
+
+    List<OrderRecord> searchOrderRecordInfoPage(Map<String, Object> map);
 }

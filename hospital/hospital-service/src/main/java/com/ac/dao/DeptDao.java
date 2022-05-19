@@ -13,11 +13,9 @@ import java.util.Map;
  * @Version 1.0
  **/
 public interface DeptDao {
-    List<HospitalDepartment> getDeptInfoPage(Map<String, Object> map);
-
     int getAllDeptNum();
 
     HospitalDepartment getThisDeptInfo(Map<String, Object> map);
 
-    String getDepartmentNameByDeptId(Map<String, Object> map1);
+    List<HospitalDepartment> searchDeptInfoPage(Map<String, Object> map);
 }

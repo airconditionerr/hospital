@@ -14,7 +14,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 public interface DoctorService {
-    List<Doctor> getDoctorInfoPage(int pageNum, int pageSize);
+    //List<Doctor> getDoctorInfoPage(int pageNum, int pageSize);
 
     List<Doctor> getDoctorInfoPageByDept(int pageNum, int pageSize, int deptId);
 
@@ -29,4 +29,6 @@ public interface DoctorService {
     Map<String, Object> loginByUsername(Map<String, String> map) throws LoginException;
 
     Map<String, Object> isLogin(String doctorId);
+
+    List<Doctor> searchDoctorInfoPage(int pageNum, int pageSize, String keyWord, int deptId);
 }

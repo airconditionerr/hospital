@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ac.dao.OrderRecordDao">
     <insert id="appoint">
-        insert into order_record (order_id, user_id, department_name, doctor_name, transact_date, transact_time,
+        insert into order_record (order_id, user_id, user_name, department_name, doctor_name, transact_date, transact_time,
                                   create_time, disease_info, is_success)
-        values (#{orderId}, #{userId}, #{departmentName}, #{doctorName}, #{transactDate}, #{transactTime},
+        values (#{orderId}, #{userId}, #{userName}, #{departmentName}, #{doctorName}, #{transactDate}, #{transactTime},
                 #{createTime}, #{diseaseInfo}, #{isSuccess})
     </insert>
 
@@ -66,5 +66,19 @@
         where order_id = #{orderId}
     </select>
 
+    <select id="getOrderNum" resultType="Integer">
+        select count(*)
+        from order_record
+    </select>
 
+    <select id="searchOrderRecordInfoPage" resultType="com.ac.bean.OrderRecord">
+        select *
+        from order_record
+        <if test="keyWord != null">
+            where doctor_name like concat('%', #{keyWord}, '%')
+            or department_name like concat('%', #{keyWord}, '%')
+        </if>
+        limit #{offset}
+        , #{pageSize}
+    </select>
 </mapper>

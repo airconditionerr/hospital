@@ -44,4 +44,8 @@ public interface OrderRecordService {
     int getOrderNumByDoctorId(String doctorId);
 
     int getOrderNumByUserId(String userId);
+
+    int getOrderNum();
+
+    List<OrderRecord> searchOrderRecordInfoPage(int pageNum, int pageSize, String keyWord);
 }

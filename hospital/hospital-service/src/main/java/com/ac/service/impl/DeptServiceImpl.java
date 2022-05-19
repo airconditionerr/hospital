@@ -27,24 +27,6 @@ public class DeptServiceImpl implements DeptService {
 
 
     /**
-     * 获取当前页科室信息
-     *
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    @Override
-    public List<HospitalDepartment> getDeptInfoPage(int pageNum, int pageSize) {
-        Map<String, Object> map = new HashMap<>();
-        int offset = (pageNum - 1) * pageSize;
-        map.put("offset", offset);
-        map.put("pageSize", pageSize);
-        List<HospitalDepartment> list = deptDao.getDeptInfoPage(map);
-        return list;
-    }
-
-
-    /**
      * 获取科室总数
      *
      * @return
@@ -69,5 +51,18 @@ public class DeptServiceImpl implements DeptService {
         map.put("id", id);
         HospitalDepartment hospitalDepartment = deptDao.getThisDeptInfo(map);
         return hospitalDepartment;
+    }
+
+
+    @Override
+    public List<HospitalDepartment> searchDeptInfoPage(int pageNum, int pageSize, String keyWord) {
+        Map<String,Object> map = new HashMap<>();
+        int offset = (pageNum - 1) * pageSize;
+        map.put("pageSize", pageSize);
+        map.put("offset", offset);
+        if (!"null".equals(keyWord)){
+            map.put("keyWord", keyWord);
+        }
+        return deptDao.searchDeptInfoPage(map);
     }
 }

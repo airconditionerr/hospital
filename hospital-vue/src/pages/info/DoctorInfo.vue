@@ -100,6 +100,7 @@
         doctorInfo: {},
         date: '',
         userEmail: '',
+        userName: '',
         dialogVisible: false,
         diseaseInfo: '',
         reqUrls: {
@@ -136,7 +137,8 @@
           transactDate: this.date,
           transactTime: this.value,
           diseaseInfo: this.diseaseInfo,
-          email: this.userEmail
+          email: this.userEmail,
+          userName: this.userName
         }, {
           headers: {
             token: localStorage.getItem('token')
@@ -154,6 +156,7 @@
       getUserEmailByUserId () {
         this.$axios.get('/hospital-web/user/info/' + sessionStorage.getItem('userId'), {}).then(response => {
           this.userEmail = response.data.userEmail
+          this.userName = response.data.name
         })
       }
     },
@@ -163,7 +166,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .tips {
     text-align: center;
     height: 40px;

@@ -38,6 +38,15 @@
               <el-button @click="handleClick(scope.row)" type="text" size="mini">预约</el-button>
             </template>
           </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
+            </template>
+          </el-table-column>
         </el-table>
         <!--分页-->
         <div class="block">
@@ -71,8 +80,8 @@
         currentPage: 1,
         pageNum: 1, // 当前页
         totalNum: 0,
+        search: '',
         reqUrls: {
-          // getDeptInfoPageUrl: '/hospital-web/dept/page/' + this.pageNum + '/' + 10, // 获取当前页科室信息请求地址
           getAllDeptNumUrl: '/hospital-web/dept/num'
         }
       }
@@ -87,12 +96,11 @@
         })
       },
       /**
-       * 获取当前页科室信息
+       * 预约按钮
+       * @param row
        */
-      getDeptInfoPage () {
-        this.$axios.get('/hospital-web/dept/page/' + this.pageNum + '/' + 10, {}).then(response => {
-          this.deptList = response.data
-        })
+      handleClick (row) {
+        this.$router.push('/deptInfo/' + row.id)
       },
       /**
        * 翻页
@@ -100,23 +108,42 @@
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getDeptInfoPage()
-      },
-      /**
-       * 预约按钮
-       * @param row
-       */
-      handleClick (row) {
-        this.$router.push('/deptInfo/' + row.id)
       }
     },
-    created () {
-      this.getAllDeptNum()
-      this.getDeptInfoPage()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == ''){ //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/dept/page/' + this.pageNum + '/' + 10 + '/' + null, {}).then(response => {
+              this.deptList = response.data.list
+              this.getAllDeptNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/dept/page/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.deptList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == ''){
+            this.$axios.get('/hospital-web/dept/page/' + this.pageNum + '/' + 10 + '/' + null, {}).then(response => {
+              this.deptList = response.data.list
+              this.getAllDeptNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/dept/page/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.deptList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
   }
 </script>
-
-<style>
-
-</style>

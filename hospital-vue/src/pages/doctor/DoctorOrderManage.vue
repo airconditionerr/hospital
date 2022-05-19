@@ -15,6 +15,11 @@
           <el-table-column
             prop="orderId"
             label="订单id"
+            width="360">
+          </el-table-column>
+          <el-table-column
+            prop="userName"
+            label="患者姓名"
             width="180">
           </el-table-column>
           <el-table-column
@@ -38,6 +43,15 @@
               <el-button @click="toOrderInfo(scope.row)" type="text" size="mini">详情</el-button>
               <el-button @click="finish(scope.row)" type="text" size="mini">完成</el-button>
               <el-button @click="cancel(scope.row)" type="text" size="mini">取消</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
             </template>
           </el-table-column>
         </el-table>
@@ -71,13 +85,7 @@
         pageNum: 1,
         doctorName: null,
         totalNum: 0,
-        reqUrls: {
-          // getDoctorInfoUrl: '/hospital-web/doctor/info/' + sessionStorage.getItem('doctorId'),
-          // getOrderInfoPageUrl: '/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/',
-          // cancelUrl: '/hospital-web/orderRecord/' + row.orderId,
-          // finishUrl: '/hospital-web/orderRecord/' + row.orderId,
-          getTotalNumUrl: '/hospital-web/orderRecord/num/'
-        }
+        search: '',
       }
     },
     methods: {
@@ -87,7 +95,6 @@
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getOrderInfoPage()
       },
       toOrderInfo (row) {
         this.$router.push('/doctorOrderInfo/' + row.orderId)
@@ -110,22 +117,53 @@
         })
       },
       getTotalNum () {
-        this.$axios.get('/hospital-web/orderRecord/num/' + sessionStorage.getItem('doctorId'), {}).then(response => {
-          this.totalNum = response.data.size
+        this.$axios.get('/hospital-web/orderRecord/num/doctor/' + sessionStorage.getItem('doctorId'), {}).then(response => {
+          this.totalNum = response.data
         })
       },
       /**
        * 获取当前医生当前页预约信息
        */
       getOrderInfoPage () {
-        this.$axios.get('/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('doctorId'), {}).then(response => {
+        this.$axios.get('/hospital-web/orderRecord/page/doctor/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('doctorId'), {}).then(response => {
           this.orderList = response.data
         })
       },
     },
-    created () {
-      this.getTotalNum()
-      this.getOrderInfoPage()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == '') { //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/orderRecord/page/doctor/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('doctorId'), {}).then(response => {
+              this.orderList = response.data
+              this.getTotalNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/orderRecord/page/search/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.orderList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == '') {
+            this.$axios.get('/hospital-web/orderRecord/page/doctor/' + this.pageNum + '/' + 10 + '/' + sessionStorage.getItem('doctorId'), {}).then(response => {
+              this.orderList = response.data
+              this.getTotalNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/orderRecord/page/search/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.orderList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
   }
 </script>

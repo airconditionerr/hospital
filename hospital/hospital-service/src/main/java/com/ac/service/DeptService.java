@@ -12,9 +12,9 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface DeptService {
-    List<HospitalDepartment> getDeptInfoPage(int pageNum, int pageSize);
-
     int getAllDeptNum();
 
     HospitalDepartment getThisDeptInfo(int id);
+
+    List<HospitalDepartment> searchDeptInfoPage(int pageNum, int pageSize, String keyWord);
 }

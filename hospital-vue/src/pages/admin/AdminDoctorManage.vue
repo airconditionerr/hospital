@@ -15,7 +15,7 @@
           <el-table-column
             prop="id"
             label="医生id"
-            width="180" v-if="false">
+            width="90">
           </el-table-column>
           <el-table-column
             prop="doctorName"
@@ -37,6 +37,15 @@
             <template slot-scope="scope">
               <el-button @click="toDoctorInfo(scope.row)" type="text" size="mini">详细信息</el-button>
               <el-button @click="deleteDoctor(scope.row)" type="text" size="mini">删除</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
             </template>
           </el-table-column>
         </el-table>
@@ -69,8 +78,8 @@
         currentPage: 1,
         pageNum: 1,
         totalNum: 0,
+        search: '',
         reqUrls: {
-          // getDoctorInfoPageUrl: '/hospital-web/doctor/' + this.pageNum + '/' + 10, // 获取当前用户当前页预约信息请求地址
           deleteDoctorUrl: '/hospital-web/doctor/',
           getAllDoctorNumUrl: '/hospital-web/doctor/num'
         }
@@ -83,14 +92,13 @@
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getDoctorInfoPage()
       },
       /**
        * 获取用户信息
        */
       getDoctorInfoPage () {
-        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10, {}).then(response => {
-          this.doctorList = response.data
+        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + null + '/' + 0, {}).then(response => {
+          this.doctorList = response.data.list
         })
       },
       /**
@@ -118,9 +126,40 @@
         })
       }
     },
-    created () {
-      this.getDoctorInfoPage()
-      this.getAllDoctorNum()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == '') { //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + null + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.getAllDoctorNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.search + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == '') {
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + null + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.getAllDoctorNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.search + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
   }
 </script>

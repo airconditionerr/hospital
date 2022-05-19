@@ -122,8 +122,6 @@
     padding-left: 6px;
     font-size: 20px;
     font-weight: bold;
-    /*height: 60px;*/
-    /*line-height: 60px;*/
     color: white;
   }
 

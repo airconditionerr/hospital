@@ -13,7 +13,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 public interface DoctorDao {
-    List<Doctor> getDoctorInfoPage(Map<String, Object> map);
+    //List<Doctor> getDoctorInfoPage(Map<String, Object> map);
 
     int getAllDoctorNum();
 
@@ -26,4 +26,6 @@ public interface DoctorDao {
     int updateDoctorInfo(Map<String, String> mapUpdateData);
 
     Doctor loginByUsername(Map<String, String> map);
+
+    List<Doctor> searchDoctorInfoPage(Map<String, Object> map);
 }

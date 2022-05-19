@@ -17,21 +17,31 @@
           <el-table-column
             prop="id"
             label="医生id"
-            width="180" v-if="false">
-          </el-table-column><el-table-column
-          prop="doctorName"
-          label="医生姓名"
-          width="180">
-        </el-table-column>
+            width="90">
+          </el-table-column>
+          <el-table-column
+            prop="doctorName"
+            label="医生姓名"
+            width="180">
+          </el-table-column>
           <el-table-column
             prop="doctorDepartment"
             label="所属科室"
-            width="180" >
+            width="180">
           </el-table-column>
           <el-table-column
             label="操作">
             <template slot-scope="scope">
               <el-button @click="handleClick(scope.row)" type="text" size="mini">预约</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
             </template>
           </el-table-column>
         </el-table>
@@ -54,22 +64,22 @@
   import crumbs from '../../components/crumbs/crumbs'
 
   export default {
-    data() {
+    components: {
+      crumbs,
+      HeadTop,
+      AsideBanner,
+    },
+    data () {
       return {
         doctorList: [],
         currentPage: 1,
         pageNum: 1, // 当前页
         totalNum: 0,
+        search: '',
         reqUrls: {
-          // getDoctorInfoPageUrl: '/hospital-web/doctor/page/' + this.pageNum + '/' + 10, // 获取当前页医生信息请求地址
           getAllDoctorNumUrl: '/hospital-web/doctor/num'
         }
       }
-    },
-    components: {
-      crumbs,
-      HeadTop,
-      AsideBanner,
     },
     methods: {
       /**
@@ -81,34 +91,55 @@
         })
       },
       /**
-       * 获取当前页医生信息
-       */
-      getDoctorInfoPage () {
-        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10, {}).then(response => {
-          this.doctorList = response.data
-        })
-      },
-      /**
        * 翻页
        * @param val
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getDoctorInfoPage()
       },
       /**
        * 预约按钮
        * @param row
        */
-      handleClick(row) {
+      handleClick (row) {
         this.$router.push('/doctorInfo/' + row.id)
       }
     },
-    created () {
-      this.getAllDoctorNum()
-      this.getDoctorInfoPage()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == '') { //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + null + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.getAllDoctorNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.search + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == '') {
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + null + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.getAllDeptNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.search + '/' + 0, {}).then(response => {
+              this.doctorList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
-
   }
 </script>
 <style>

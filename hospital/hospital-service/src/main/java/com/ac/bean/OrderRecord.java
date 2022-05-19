@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 public class OrderRecord {
     private String orderId;
     private String userId;
+    private String userName;    //用户姓名
     private String hospitalName;   //医院名称
     private String departmentName; //科室名称
     private String doctorName; //医生姓名

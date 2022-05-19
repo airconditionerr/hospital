@@ -1,5 +1,6 @@
 package com.ac.web.controller;
 
+import com.ac.bean.Doctor;
 import com.ac.bean.User;
 import com.ac.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +98,7 @@ public class UserController {
     /**
      * 发送验证码
      *
-     * @param map   {"userEmail"}
+     * @param map {"userEmail"}
      * @return vcode
      * @throws UnsupportedEncodingException
      * @throws MessagingException
@@ -138,22 +139,19 @@ public class UserController {
     }
 
 
-    /**
-     * 获取一页用户信息
-     *
-     * @param pageNum  页码
-     * @param pageSize 页面大小
-     * @return list
-     */
-    @GetMapping(value = "/user/page/{pageNum}/{pageSize}")
+    @GetMapping(value = "/user/page/{pageNum}/{pageSize}/{keyWord}")
     @ResponseBody
-    public List<User> getUserInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
-        log.info("----------------进入获取所有用户信息操作----------------");
-        log.info(String.valueOf(pageNum));
-        log.info(String.valueOf(pageSize));
-        List<User> list = userService.getUserInfoPage(pageNum, pageSize);
-        log.info("----------------获取所有用户信息成功----------------");
-        return list;
+    public Map<String, Object> searchUserInfoPage(@PathVariable("pageNum") int pageNum,
+                                                  @PathVariable("pageSize") int pageSize,
+                                                  @PathVariable("keyWord") String keyWord) {
+        log.info("----------------搜索当前页用户信息操作----------------");
+        log.info("----------------pageNum:" + String.valueOf(pageNum) + ",pageSize:" + String.valueOf(pageSize) + ",keyWord：" + keyWord + "----------------");
+        List<User> list = userService.searchUserInfoPage(pageNum, pageSize, keyWord);
+        Map<String, Object> mapRet = new HashMap<>();
+        mapRet.put("list", list);
+        mapRet.put("totalNum", list.size());
+        log.info("----------------搜索当前页用户信息成功----------------");
+        return mapRet;
     }
 
 
@@ -182,5 +180,15 @@ public class UserController {
     public boolean updateUserInfo(@RequestBody Map<String, String> mapUpdateData) {
         boolean success = userService.updateUserInfo(mapUpdateData);
         return success;
+    }
+
+
+    @GetMapping(value = "/user/num")
+    @ResponseBody
+    public int getUserNum() {
+        log.info("----------------进入获取所有用户数量操作----------------");
+        int num = userService.getUserNum();
+        log.info("----------------获取所有用户数量成功----------------");
+        return num;
     }
 }

@@ -1,10 +1,10 @@
 <template>
   <el-row class="header-row" id="whole-row">
-    <el-col :span="4" offset="1" id="title">
-      <el-link type="primary" :underline="false" href="/index">XXXXX医院挂号系统</el-link>
+    <el-col :span="4" offset="1">
+      <el-link type="primary" :underline="false" href="/index"><span id="title">智 慧 健 康 预 约 挂 号 系 统</span></el-link>
     </el-col>
     <el-col :span="1" v-if="iLogin" offset="16">
-      <div>
+      <div id="head-portrait">
         <el-dropdown @command="handleCommand">
           <el-link href="/adminOrderManage" :underline="false">
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
@@ -82,7 +82,13 @@
   }
 
   #title {
-    font-size: 20px;
+    font-size: 22px;
     line-height: 60px;
+    font-weight: bold;
+    color: white;
+  }
+
+  #head-portrait {
+    margin-top: 10px;
   }
 </style>

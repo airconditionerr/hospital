@@ -25,92 +25,6 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-    /**
-     * 根据部门Id获取医生信息
-     *
-     * @param pageNum  页码
-     * @param pageSize 页面大小
-     * @param deptId   部门Id
-     * @return
-     */
-    @GetMapping(value = "/doctor/page/{pageNum}/{pageSize}/{deptId}")
-    @ResponseBody
-    public List<Doctor> getDoctorInfoPageByDept(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("deptId") int deptId) {
-        log.info("----------------进入获取当前科室当前页所有医生信息操作----------------");
-        log.info("----------------当前页码" + String.valueOf(pageNum) + "----------------");
-        log.info("----------------页面大小" + String.valueOf(pageNum) + "----------------");
-        log.info("----------------科室名称" + String.valueOf(deptId) + "----------------");
-        List<Doctor> list = doctorService.getDoctorInfoPageByDept(pageNum, pageSize, deptId);
-        log.info("----------------获取当前科室当前页所有医生信息成功----------------");
-        return list;
-    }
-
-
-    /**
-     * 获取当前页医生信息
-     *
-     * @param pageNum  页码
-     * @param pageSize 页面大小
-     * @return
-     */
-    @GetMapping(value = "/doctor/page/{pageNum}/{pageSize}")
-    @ResponseBody
-    public List<Doctor> getDoctorInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
-        log.info("----------------进入获取当前页医生信息操作----------------");
-        log.info("----------------当前页码" + String.valueOf(pageNum) + "----------------");
-        log.info("----------------页面大小" + String.valueOf(pageSize) + "----------------");
-        List<Doctor> list = doctorService.getDoctorInfoPage(pageNum, pageSize);
-        log.info("----------------获取当前页医生信息成功----------------");
-        return list;
-    }
-
-
-    /**
-     * 获取所有医生总数
-     *
-     * @return
-     */
-    @GetMapping(value = "/doctor/num")
-    @ResponseBody
-    public int getAllDoctorNum() {
-        log.info("----------------进入获取所有医生数量操作----------------");
-        int num = doctorService.getAllDoctorNum();
-        log.info("----------------获取所有医生数量成功----------------");
-        return num;
-    }
-
-
-    /**
-     * 获取当前医生信息
-     *
-     * @param id 医生id
-     * @return
-     */
-    @GetMapping(value = "/doctor/info/{id}")
-    @ResponseBody
-    public Doctor getThisDoctorInfo(@PathVariable("id") int id) {
-        log.info("----------------进入获取当前医生信息操作----------------");
-        Doctor doctor = doctorService.getThisDoctorInfo(id);
-        log.info("----------------获取当前医生信息成功----------------");
-        return doctor;
-    }
-
-
-    @DeleteMapping(value = "/doctor/{id}")
-    @ResponseBody
-    public boolean deleteDoctor(@PathVariable("id")int id){
-        boolean success = doctorService.deleteDoctor(id);
-        return success;
-    }
-
-
-    @PutMapping(value = "/doctor")
-    @ResponseBody
-    public boolean updateDoctorInfo(@RequestBody Map<String, String> mapUpdateData) {
-        boolean success = doctorService.updateDoctorInfo(mapUpdateData);
-        return success;
-    }
-
 
     /**
      * 医生登录
@@ -144,10 +58,96 @@ public class DoctorController {
     }
 
 
+    /**
+     * 获取/搜索当前页医生信息
+     *
+     * @param pageNum  页码
+     * @param pageSize 页面大小
+     * @param keyWord 关键词
+     * @param deptId 科室id
+     * @return
+     */
+    @GetMapping(value = "/doctor/page/{pageNum}/{pageSize}/{keyWord}/{deptId}")
+    @ResponseBody
+    public Map<String, Object> searchDoctorInfoPage(@PathVariable("pageNum") int pageNum,
+                                                    @PathVariable("pageSize") int pageSize,
+                                                    @PathVariable("keyWord") String keyWord,
+                                                    @PathVariable("deptId") int deptId) {
+        log.info("----------------搜索当前页医生信息操作----------------");
+        log.info("----------------pageNum:" + String.valueOf(pageNum) + ",pageSize:" + String.valueOf(pageSize) + ",keyWord：" + keyWord + ",deptId:" + String.valueOf(deptId) + "----------------");
+        List<Doctor> list = doctorService.searchDoctorInfoPage(pageNum, pageSize, keyWord, deptId);
+        Map<String, Object> mapRet = new HashMap<>();
+        mapRet.put("list", list);
+        mapRet.put("totalNum", list.size());
+        log.info("----------------搜索当前页医生信息成功----------------");
+        return mapRet;
+    }
+
+
+    /**
+     * 获取所有医生总数
+     *
+     * @return
+     */
+    @GetMapping(value = "/doctor/num")
+    @ResponseBody
+    public int getAllDoctorNum() {
+        log.info("----------------进入获取所有医生数量操作----------------");
+        int num = doctorService.getAllDoctorNum();
+        log.info("----------------获取所有医生数量成功----------------");
+        return num;
+    }
+
+    /**
+     * 更新医生信息
+     * @param mapUpdateData
+     * @return
+     */
+    @PutMapping(value = "/doctor/info")
+    @ResponseBody
+    public boolean updateDoctorInfo(@RequestBody Map<String, String> mapUpdateData) {
+        boolean success = doctorService.updateDoctorInfo(mapUpdateData);
+        return success;
+    }
+
+
+    /**
+     * 获取当前医生信息
+     *
+     * @param id 医生id
+     * @return
+     */
+    @GetMapping(value = "/doctor/info/{id}")
+    @ResponseBody
+    public Doctor getThisDoctorInfo(@PathVariable("id") int id) {
+        log.info("----------------进入获取当前医生信息操作----------------");
+        Doctor doctor = doctorService.getThisDoctorInfo(id);
+        log.info("----------------获取当前医生信息成功----------------");
+        return doctor;
+    }
+
+    /**
+     * 删除医生
+     * @param id    医生id
+     * @return
+     */
+    @DeleteMapping(value = "/doctor/{id}")
+    @ResponseBody
+    public boolean deleteDoctor(@PathVariable("id") int id) {
+        boolean success = doctorService.deleteDoctor(id);
+        return success;
+    }
+
+
+
+
+
+
+
     @RequestMapping(value = "/doctor/status/{doctorId}")
     @ResponseBody
-    public Map<String,Object> isLogin(@PathVariable("doctorId")String doctorId) {
-        Map<String,Object> mapRet = doctorService.isLogin(doctorId);
+    public Map<String, Object> isLogin(@PathVariable("doctorId") String doctorId) {
+        Map<String, Object> mapRet = doctorService.isLogin(doctorId);
         return mapRet;
     }
 

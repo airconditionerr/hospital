@@ -90,7 +90,6 @@
         pageNum: 1, //当前页
         totalNum: 0,
         reqUrls: {
-          // getDoctorInfoPageByDeptUrl: '/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.deptInfo.departmentName ,  // 获取当前页医生信息请求地址
           getThisDeptInfo: '/hospital-web/dept/info/' + this.$route.params.id
         }
       }
@@ -112,8 +111,8 @@
        * 获取当前页医生信息
        */
       getDoctorInfoPageByDept () {
-        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + this.$route.params.id, {}).then(response => {
-          this.doctorList = response.data
+        this.$axios.get('/hospital-web/doctor/page/' + this.pageNum + '/' + 10 + '/' + null + '/' + this.$route.params.id, {}).then(response => {
+          this.doctorList = response.data.list
         })
       },
       /**
@@ -122,7 +121,7 @@
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getDoctorInfoPage()
+        this.getDoctorInfoPageByDept()
       }
     },
     created () {

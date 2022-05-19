@@ -15,6 +15,11 @@
           <el-table-column
             prop="orderId"
             label="订单id"
+            width="360">
+          </el-table-column>
+          <el-table-column
+            prop="userName"
+            label="患者姓名"
             width="180">
           </el-table-column>
           <el-table-column
@@ -37,6 +42,15 @@
             <template slot-scope="scope">
               <el-button @click="toOrderInfo(scope.row)" type="text" size="mini">详情</el-button>
               <el-button @click="cancel(scope.row)" type="text" size="mini">取消</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
             </template>
           </el-table-column>
         </el-table>
@@ -68,8 +82,9 @@
         orderList: [],
         currentPage: 1,
         pageNum: 1,
+        totalNum: 0,
+        search: '',
         reqUrls: {
-          // getOrderInfoPageUrl: '/hospital-web/orderRecord/' + this.pageNum + '/' + 10, // 获取当前用户当前页预约信息请求地址
           cancelUrl: '/hospital-web/appoint/'
         }
       }
@@ -81,7 +96,6 @@
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getOrderInfoPage()
       },
       /**
        * 获取当前用户当前页预约信息
@@ -97,14 +111,51 @@
       cancel (row) {
         this.$axios.delete(this.reqUrls.cancelUrl + row.orderId, {}).then(response => {
           if (response.data) {
-            this.$message('取消成功')
+            this.$message('取消成功 ')
             this.getOrderInfoPage()
           }
         })
+      },
+      getOrderNum () {
+        this.$axios.get('hospital-web/orderRecord/num', {}).then(response => {
+          this.totalNum = response.data
+        })
       }
     },
-    created () {
-      this.getOrderInfoPage()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == '') { //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10, {}).then(response => {
+              this.orderList = response.data
+              this.getOrderNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/orderRecord/page/search/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.orderList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == '') {
+            this.$axios.get('/hospital-web/orderRecord/page/' + this.pageNum + '/' + 10, {}).then(response => {
+              this.orderList = response.data
+              this.getOrderNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/orderRecord/page/search/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.orderList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
   }
 </script>

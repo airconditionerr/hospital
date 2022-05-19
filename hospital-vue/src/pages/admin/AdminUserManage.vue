@@ -39,6 +39,15 @@
               <el-button @click="deleteUser(scope.row)" type="text" size="mini">删除</el-button>
             </template>
           </el-table-column>
+          <el-table-column
+            align="right">
+            <template slot="header" slot-scope="scope">
+              <el-input
+                v-model="search"
+                size="medium"
+                placeholder="输入关键字搜索"/>
+            </template>
+          </el-table-column>
         </el-table>
         <!--分页-->
         <div class="block">
@@ -67,11 +76,9 @@
       return {
         userList: [],
         currentPage: 1,
-        pageNum: 1
-        // reqUrls: {
-          // getUserInfoPageUrl: '/hospital-web/user/page/' + this.pageNum + '/' + 10,  // 获取当前用户当前页预约信息请求地址
-          // deleteUserUrl: '/hospital-web/user/' + row.userId
-        // }
+        pageNum: 1,
+        totalNum: 0,
+        search: ''
       }
     },
     methods: {
@@ -81,14 +88,13 @@
        */
       handleCurrentChange (val) {
         this.pageNum = val
-        this.getUserInfoPage()
       },
       /**
        * 获取用户信息
        */
       getUserInfoPage () {
-        this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10, {}).then(response => {
-          this.userList = response.data
+        this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10 + '/' + null, {}).then(response => {
+          this.userList = response.data.list
         })
       },
       /**
@@ -109,10 +115,47 @@
        */
       toUserInfo (row) {
         this.$router.push('/adminUserInfo/' + row.userId)
+      },
+      getUserNum() {
+        this.$axios.get('/hospital-web/user/num', {}).then(response => {
+          this.totalNum = response.data
+        })
       }
     },
-    created () {
-      this.getUserInfoPage()
+    watch: {
+      search: {
+        handler () {
+          if (this.search == '') { //搜索框为空
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10 + '/' + null, {}).then(response => {
+              this.userList = response.data.list
+              this.getUserNum()
+            })
+          } else {
+            this.pageNum = 1
+            this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.userList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        },
+        immediate: true
+      },
+      pageNum: {
+        handler () {
+          if (this.search == '') {
+            this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10 + '/' + null, {}).then(response => {
+              this.userList = response.data
+              this.getUserNum()
+            })
+          } else {
+            this.$axios.get('/hospital-web/user/page/' + this.pageNum + '/' + 10 + '/' + this.search, {}).then(response => {
+              this.userList = response.data.list
+              this.totalNum = response.data.totalNum
+            })
+          }
+        }
+      }
     }
   }
 </script>

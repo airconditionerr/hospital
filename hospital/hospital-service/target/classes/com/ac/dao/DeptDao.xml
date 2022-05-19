@@ -3,19 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ac.dao.DeptDao">
-    <select id="getDeptInfoPage" resultType="com.ac.bean.HospitalDepartment">
-        select * from hospital_department limit #{offset}, #{pageSize}
+    <select id="getAllDeptNum" resultType="Integer">
+        select count(*)
+        from hospital_department
     </select>
 
-    <select id="getAllDeptNum" resultType="Integer">
-        select count(*) from hospital_department
-    </select>
 
     <select id="getThisDeptInfo" resultType="com.ac.bean.HospitalDepartment">
-        select * from hospital_department where id = #{id}
+        select *
+        from hospital_department
+        where id = #{id}
     </select>
 
-    <select id="getDepartmentNameByDeptId" resultType="string">
-        select department_name from hospital_department where id = #{deptId}
+
+    <select id="searchDeptInfoPage" resultType="com.ac.bean.HospitalDepartment">
+        select *
+        from hospital_department
+        <if test="keyWord != null">
+            where department_name like concat('%', #{keyWord}, '%')
+        </if>
+        limit #{offset}
+        , #{pageSize}
     </select>
 </mapper>

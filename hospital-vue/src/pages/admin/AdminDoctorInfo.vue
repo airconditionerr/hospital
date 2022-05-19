@@ -61,7 +61,7 @@
         reqUrls: {
           getThisdoctorInfoUrl: '/hospital-web/doctor/info/' + this.$route.params.id,
           deleteDoctorUrl: '/hospital-web/doctor/' + this.$route.params.id,
-          updateDoctorInfoUrl: 'hospital-web/doctor'
+          updateDoctorInfoUrl: 'hospital-web/doctor/info'
         }
       }
     },

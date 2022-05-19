@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,19 @@ public class OrderRecordController {
     @Autowired
     OrderRecordService orderRecordService;
 
+    /**
+     * 预约
+     *
+     * @param mapAppointData
+     * @param request
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws MessagingException
+     */
     @PostMapping(value = "/orderRecord")
     @ResponseBody
-    public boolean appoint(@RequestBody Map<String, Object> mapAppointData, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+    public boolean appoint(@RequestBody Map<String, Object> mapAppointData,
+                           HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
         log.info("----------------进入预约操作----------------");
         log.info("----------------预约信息：" + mapAppointData.toString() + "----------------");
         String token = request.getHeader("token");
@@ -38,7 +49,7 @@ public class OrderRecordController {
         return success;
     }
 
-    @GetMapping(value = "/orderRecord/{pageNum}/{pageSize}/{userid}")
+    @GetMapping(value = "/orderRecord/page/user/{pageNum}/{pageSize}/{userid}")
     @ResponseBody
     public List<OrderRecord> getOrderInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("userid") String userid) {
         log.info("----------------进入获取所有订单信息操作----------------");
@@ -51,18 +62,56 @@ public class OrderRecordController {
     }
 
 
-    @GetMapping(value = "/orderRecord/page/{pageNum}/{pageSize}/{doctorId}")
+    @GetMapping(value = "/orderRecord/page/{pageNum}/{pageSize}")
+    @ResponseBody
+    public List<OrderRecord> getOrderInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        log.info("----------------进入获取所有订单信息操作----------------");
+        log.info(String.valueOf(pageNum));
+        log.info(String.valueOf(pageSize));
+        List<OrderRecord> list = orderRecordService.getOrderInfoPage2(pageNum, pageSize);
+        log.info("----------------获取所有订单信息成功----------------");
+        return list;
+    }
+
+
+    @GetMapping(value = "/orderRecord/page/doctor/{pageNum}/{pageSize}/{doctorId}")
     @ResponseBody
     public List<OrderRecord> getOrderInfoPageByDoctorId(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("doctorId") String doctorId) {
         log.info("----------------进入获取所有订单信息操作----------------");
-        log.info(String.valueOf(pageNum)+ ", " + String.valueOf(pageSize) + ", " + doctorId);
+        log.info(String.valueOf(pageNum) + ", " + String.valueOf(pageSize) + ", " + doctorId);
         List<OrderRecord> list = orderRecordService.getOrderInfoPageByDoctorId(pageNum, pageSize, doctorId);
         log.info("----------------获取所有订单信息成功----------------");
         return list;
     }
 
 
-    @GetMapping(value = "/orderRecord/num/{doctorId}")
+    @GetMapping(value = "/orderRecord/page/search/{pageNum}/{pageSize}/{keyWord}")
+    @ResponseBody
+    public Map<String, Object> searchOrderRecordInfoPage(@PathVariable("pageNum") int pageNum,
+                                                         @PathVariable("pageSize") int pageSize,
+                                                         @PathVariable("keyWord") String keyWord) {
+        log.info("----------------搜索当前页预约信息操作----------------");
+        log.info("----------------pageNum:" + String.valueOf(pageNum) + ",pageSize:" + String.valueOf(pageSize) + ",keyWord：" + keyWord + "----------------");
+        List<OrderRecord> list = orderRecordService.searchOrderRecordInfoPage(pageNum, pageSize, keyWord);
+        Map<String, Object> mapRet = new HashMap<>();
+        mapRet.put("list", list);
+        mapRet.put("totalNum", list.size());
+        log.info("----------------搜索当前页预约信息成功----------------");
+        return mapRet;
+    }
+
+
+    @GetMapping(value = "/orderRecord/num")
+    @ResponseBody
+    public int getOrderNum() {
+        log.info("----------------进入获取所有订单信息操作----------------");
+        int num = orderRecordService.getOrderNum();
+        log.info("----------------获取所有订单信息成功----------------");
+        return num;
+    }
+
+
+    @GetMapping(value = "/orderRecord/num/doctor/{doctorId}")
     @ResponseBody
     public int getOrderNumByDoctorId(@PathVariable("doctorId") String doctorId) {
         log.info("----------------进入获取所有订单信息操作----------------");
@@ -82,16 +131,17 @@ public class OrderRecordController {
     }
 
 
-
-    @GetMapping(value = "/orderRecord/page/{pageNum}/{pageSize}")
+    /**
+     * 获取预约信息
+     *
+     * @param orderId
+     * @return
+     */
+    @GetMapping(value = "/orderRecord/info/{orderId}")
     @ResponseBody
-    public List<OrderRecord> getOrderInfoPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
-        log.info("----------------进入获取所有订单信息操作----------------");
-        log.info(String.valueOf(pageNum));
-        log.info(String.valueOf(pageSize));
-        List<OrderRecord> list = orderRecordService.getOrderInfoPage2(pageNum, pageSize);
-        log.info("----------------获取所有订单信息成功----------------");
-        return list;
+    public OrderRecord getOrderRecordInfo(@PathVariable("orderId") String orderId) {
+        OrderRecord orderRecord = orderRecordService.getOrderRecordInfo(orderId);
+        return orderRecord;
     }
 
 
@@ -110,21 +160,14 @@ public class OrderRecordController {
 
 
     /**
-     * 获取预约信息
+     * 完成预约
+     *
      * @param orderId
      * @return
      */
-    @GetMapping(value = "/orderRecord/info/{orderId}")
-    @ResponseBody
-    public OrderRecord getOrderRecordInfo(@PathVariable("orderId") String orderId) {
-        OrderRecord orderRecord = orderRecordService.getOrderRecordInfo(orderId);
-        return orderRecord;
-    }
-
-
     @PutMapping(value = "/orderRecord/{orderId}")
     @ResponseBody
-    public boolean finish(@PathVariable("orderId") String orderId){
+    public boolean finish(@PathVariable("orderId") String orderId) {
         boolean success = orderRecordService.finish(orderId);
         return success;
     }
